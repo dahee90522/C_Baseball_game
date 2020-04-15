@@ -1,0 +1,58 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
+#pragma warning(disable:4996)
+int main() {
+	int check = 0;
+	while (check == 0) {
+		system("cls");
+		int com[3];//컴퓨터가 생각하는 숫자 랜덤으로 발생될 것
+		int user[3];//유저가 입력하는수
+		int strike = 0;
+		int ball = 0;
+		srand((unsigned)time(0));
+		for (int i = 0; i < 3; i++) {
+			com[i] = rand() % 10;//0~9
+			for (int j = 0; j < i; j++)
+				if (com[i] == com[j])i--;
+		}
+		for (int z = 1; z <= 20; z++) {
+			printf("%d번째 수 입력 : ", z);
+			for (int i = 0; i < 3; i++)
+				scanf("%d", &user[i]);
+			for (int i = 0; i < 3; i++) {
+				if (com[i] == user[i])strike++;
+				for (int j = 0; j < 3; j++) {
+					if (com[i] == user[j]) ball++;
+				}
+			}
+			ball = ball - strike;
+			//printf("%d 스트라이크\n", strike);
+			if (strike == 3) { printf("correct\n"); break; }
+			else if (strike + ball == 0)printf("out\n");
+			else {
+				printf("%d strike\n", strike);
+				printf("%d ball\n", ball);
+				ball = 0;
+				strike = 0;
+			}
+		}
+		if (strike == 3) {
+			system("cls");
+			printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+			printf("!!!!!!!!!!정답!!!!!!!!!!\n");
+			printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+			printf("참 잘했어요 짝짝\n");
+		}
+		else {
+			printf("정답 : ");
+			for (int i = 0; i < 3; i++)printf("%d ", com[i]);
+			printf("\n");
+
+		}
+		printf("계속 할려면 0\n그만할려면 아무 숫자 : ");
+		scanf("%d", &check);
+	}
+}
